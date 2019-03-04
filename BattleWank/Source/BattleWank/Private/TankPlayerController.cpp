@@ -7,7 +7,6 @@ ATank* ATankPlayerController::GetControlledTank() const { return Cast<ATank>(Get
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
 
 	auto LogTank = GetControlledTank();
 	if (!LogTank)
