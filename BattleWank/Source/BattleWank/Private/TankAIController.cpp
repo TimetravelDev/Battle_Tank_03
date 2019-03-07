@@ -39,4 +39,18 @@ void ATankAIController::BeginPlay()
 	}
 }
 
+// called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
+	if (GetPlayerTank())
+	{
+		// TODO move toward the player
+
+		// aim at the player
+		GetAIControlledTank()->AimAt(GetPlayerTank()->GetActorLocation(), GetAIControlledTank()->LaunchSpeed);
+
+		// TODO fire if ready
+	}
+}

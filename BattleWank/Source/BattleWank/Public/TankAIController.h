@@ -15,10 +15,13 @@ class BATTLEWANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+public:
+	void BeginPlay() override;
+
+	void Tick(float DeltaSeconds) override;
+
 private:
 	ATank* GetAIControlledTank() const;
-
-	void BeginPlay() override;
 
 	ATank* GetPlayerTank() const;
 };
