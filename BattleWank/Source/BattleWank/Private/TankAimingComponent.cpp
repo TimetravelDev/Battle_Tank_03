@@ -37,8 +37,18 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	auto OurTankName = GetOwner()->GetName();
-	// auto BarrelLocation = TankBarrel->GetComponentLocation();
-	// UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("%s is firing at %f"), *OurTankName, LaunchSpeed);
+	if (!TankBarrel) { return; }
+	// this - tankaimingcomponent is a uobject
+	FVector OutLaunchVelocity(0);
+	FVector StartLocation = TankBarrel->GetSocketLocation(FName("LaunchPoint"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed))
+	{
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+
+		auto OurTankName = GetOwner()->GetName();
+		// auto BarrelLocation = TankBarrel->GetComponentLocation();
+		// UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *OurTankName, *AimDirection.ToString());
+	}
 }
