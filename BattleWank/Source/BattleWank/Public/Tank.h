@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h" // must be last
 
+class UTankBarrel;
+
 UCLASS()
 class BATTLEWANK_API ATank : public APawn
 {
@@ -19,8 +21,6 @@ protected:
 	virtual void BeginPlay() override;
 	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -31,11 +31,11 @@ public:
 	ATank();
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
-	UStaticMeshComponent* TankBarrel = nullptr;
+	UTankBarrel* TankBarrel = nullptr;
 
 };
