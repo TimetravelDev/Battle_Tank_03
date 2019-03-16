@@ -2,11 +2,13 @@
 
 #pragma once
 
-#include "TankBarrel.h"
 #include "CoreMinimal.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+
+// forward declaration
+class UTankBarrel;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLEWANK_API UTankAimingComponent : public UActorComponent

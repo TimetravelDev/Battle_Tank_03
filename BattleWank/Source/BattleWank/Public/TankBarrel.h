@@ -13,13 +13,19 @@ class BATTLEWANK_API UTankBarrel : public UStaticMeshComponent
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 20;
+	float MaxDegreesPerSecond = 10;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxElevationDegrees = 40;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MinElevationDegrees = 0;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxRelativeSpeed = 1;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MinRelativeSpeed = -1;
 
 public:
 	// -1 is max downward speed, +1 is max upward speed

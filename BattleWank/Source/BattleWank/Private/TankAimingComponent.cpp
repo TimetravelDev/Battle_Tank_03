@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -25,7 +26,19 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FVector StartLocation = TankBarrel->GetSocketLocation(FName("LaunchPoint"));
 
 	// automated solution to calculate shell trajectory
-	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed);
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
+		this, 
+		OutLaunchVelocity, 
+		StartLocation, 
+		HitLocation, 
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	);
+	auto Time = GetWorld()->GetTimeSeconds();
 
 	if (bHaveAimSolution)
 	{
@@ -35,7 +48,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		auto OurTankName = GetOwner()->GetName();
 		// auto BarrelLocation = TankBarrel->GetComponentLocation();
 		// UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
-		// UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *OurTankName, *AimDirection.ToString());
+		
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aiming Solution Found"), Time);
+	}
+	else
+	{
+ 		UE_LOG(LogTemp, Warning, TEXT("%f: No aiming solution"), Time);
 	}
 }
 
@@ -48,5 +66,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	// Move the barrel the right amount this frame
 	// Given a max elevation speed and the frame time
-	TankBarrel->Elevate(5);
+	TankBarrel->Elevate(DeltaRotator.Pitch);
 }
